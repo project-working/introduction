@@ -7,6 +7,7 @@ Dataset is a structured collection of data
 (multiple records or a single table).
 
 Database:
+y
 It is an organized collection of data stored as multiple datasets.
 (multiple tables)
 
