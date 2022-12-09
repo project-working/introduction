@@ -1,0 +1,492 @@
+data:
+It is a observations or measuremts which can be represented as text or number or multimedia.
+(one record)
+
+Dataset :
+Dataset is a structured collection of data
+(multiple records or a single table).
+
+Database:
+It is an organized collection of data stored as multiple datasets.
+(multiple tables)
+
+Database management system:
+It is nothing but data keeping system. we can keep the databases electronically in this system.
+(multiple databases)
+
+
+DBMS ------->batabase----->dataset----->data.
+
+There are total 5 database objects;
+1.Tables
+2.Views
+3.index
+4.Sequenced
+5.Synonym
+
+Synonym is used to give permanent alias name to a table;
+
+SYNTAX:-  CREATE OR REPLACE EMP FOR EMPLOYEES; --> Here we gave a temporary name to employees table;
+
+---------------------------------------------------------------------------------------------------------------------------------------
+we have 4 types of database management system.
+Relational dbms
+object oriented dbms
+Hierarchical database.
+Network database.
+
+
+we know only relational database.
+
+It uses sql queries to manipulate the data.
+In the RDBMS we can we MYSQL,MSSQL,ORACLE etc. to communicate with data 
+
+oracle:-
+------
+
+It is a standard language to deal with RDBMS.
+It is a structred query language.
+It uses DDL,DML,DCL,TCL commands.
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+												DDL
+											------------------------
+1.create is used to create databse or tables;
+
+CREATE DATABASE VIRTUSA;
+
+CREATE TABLE EMPLOYEES (' In this table we can give no.of columns with speific datatype);
+
+2.Drop is used to delete table or databases.
+
+DROP DATABASE VIRTUSA;
+
+DROP TABLE EMPLOYEES;
+
+3.Truncate is used to delete all records from the table.
+
+Truncate table employees;
+
+4.comment is used to write comments in sql
+-- used for single line comments
+/*  for multi line comments
+
+4. Rename is used to change the name of a table.
+
+RENAME EMPLOYEES TO EMP;
+
+5.Alter is used to altering the table. for example  changing column name,data type,adding constraints,adding columns,droping columns etc.
+
+i) adding column:-
+ALTER TABLE  EMPLOYEES ADD (NEW COLUMN NAME, DATATYPE);
+
+ii) changing column name:-
+ALTER TABLE EMPLOYEES RENAME COLUMN (OLD_NAME) TO (NEW_NAME).
+
+iii)changing datatype:-
+ALTER TABLE EMPLOYEES MODIFY (COLUMN_NAME)(DATATYPE)
+
+iv) droping column
+ALTER TABLE DROP COLUMN  (COLUMN_NAME)
+
+v) adding constraint:
+ALTER TABLE EMPLOYEES ADD PRIMARY KEY(COLUMN_NAME);
+
+ALTER TABLE EMPLOYEES ADD FOREIGN KEY(COLUMN_NAME) REFERENCES (PRIMARY_COLUMN)
+ 
+
+------------------------------------------------------------------------------------------------------------------------------------
+
+
+											DML
+										----------------------
+
+i)Select is used to retrieve the data from the table;
+
+SELECT * FROM EMPLOYEES;
+
+ii) Insert in used to insert the recorde into the tables;
+
+INSERT INTO EMPLOOYEES VALUES( we have to give values to all coulmns based on their datatpe)
+
+if we want to give values to only selective columns.. INSERT INTO EMPLOYEES (selective columns) VALUES( values);
+
+iii)Update is used to update the already existing data
+
+UPDATE TABLE EMPLOYEES SET SALARY=1000 WHERE (ondition);
+
+iv) Delete is used to delete the specific rows from a table;
+
+DELETE FROM EMPLOYEES WHERE (condition);
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+											DCL (data control language)
+										---------------------------------------------
+
+i) SQL Grant command is specifically used to provide privileges to database objects for a user.
+
+GRANT INSERT,SELECT ON EMPLOYEES TO (user_name);
+
+grant select on departments to XYZ;
+
+** If we want to see all privileges on a table ==== select * from table_privileges where table_name='EMPLOYEES';
+
+** If we want to see which privileges the user have on which tables.. === select * from table_privileges where grantee='HR';
+
+CREATING USER ------ CREATE USER usr_name IDENTIFIED BY password;
+
+
+ii) Revoking-- It is an sql command used to remove granted permissions;
+
+REVOKE INSERT,SELECT ON EMPLOYEES FROM (user_name);
+
+---------------------------------------------------------------------------------------------------------------------------------------------------
+
+											TCL (transaction control language)
+										------------------------------------------
+
+i)What is COMMIT in SQL?
+COMMIT is a transaction control language in SQL. It lets a user permanently save all the changes made in the transaction of a database or table.
+ Once you execute the COMMIT, the database cannot go back to its previous state in any case.
+
+
+ii) ROLLBACK is a transactional control language in SQL.
+ It lets a user undo those transactions that aren’t saved yet in the database. 
+One can make use of this command if they wish to undo any changes or alterations since the execution of the last COMMIT.
+
+
+iii) save point is used to save the changes in the database.
+
+syntax:- save point s1;
+
+ we can rollback the chamges to different save points
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+i) WHERE :- 
+ where is used to filter the records by giving one or more conditions;
+
+SELECT * FROM EMPLOYEES WHERE SALARY>10000;
+
+
+II) AND or OR :-
+AND or OR is used to filter records based on more than one condition.
+
+SELECT * FROM EMPLOYEES WHERE SALARY>10000 AND TO_CHAR(HIRE_DATE,'YYYY')>2020;
+
+SELECT * FROM EMPLOYEES WHERE FIRST_NAME LIKE  'V%' OR FIRST_NAME LIKE  ''K%';
+
+
+III) ORDER BY:-
+Order by clause is used to sort the result set in asc or desc order;
+
+SELECT * FROM EMPLOYEES ORDER BY SALARY;
+
+SELECT * FROM EMPLOYEES ORDER BY FIRST_NAME;
+
+IV) LIMIT :-
+
+Limit is used to specify the number of records to be return;
+
+SELECT * FROM EMPLOYEES LIMIT 5;
+
+select count(*) from employees;===107
+
+select * from employees offset 101 rows fetch next 5 rows only;
+
+
+V) LIKE :-
+
+Like is used to search specific pattern;
+
+SELECT * FROM EMPLOYEES WHERE FIRST_NAME LIKE  'V%';
+
+SELECT * FROM EMPLOYEES WHERE EMAIL LIKE  '%_\%' ESCAPE '\' ; ---> This is for searching pattern which has _ in ther email;
+
+
+
+vi) UNION and UION ALL;
+
+UNION is used to combine two or more select statements;
+It returns distinct values from both select statements;
+NOTE :-  Both the select statements sholuld have equal number of columns.
+
+SELECT FIRST_NAME,SALARY FROM EMPLOYEES UNION SELECT FIRST_NAME,SALARY FROM EMP;
+
+
+UNION ALL;-
+
+It returns duplicate values also from both statements;
+
+SELECT FIRST_NAME,SALARY FROM EMPLOYEES UNION ALL SELECT FIRST_NAME,SALARY FROM EMP;
+
+
+
+INTERSECT :-
+
+It is also used to combine two or more select statements but returns matched records from both statements;
+
+
+vii) GROUP BY:-
+
+Group by clause is used to group the rows that have same value into a summary row.
+
+we have to return the same column or values with aggregate functions when we use group by clause.
+
+select to_char(hire_date,'yyyy') from employees group by to_char(hire_date,'yyyy');
+
+viii) HAVING :-
+Having clause is used to filter records. we use in addition to gruop by clause; 
+
+Actually where clause cannot be used with aggregate functions that's why we use having;
+Also we can give two conditions in having clause.
+
+SELECT SUM(SALARY) FROM EMPLOYEES GROUP BY JOB_ID HAVING SUM(SALARY)>10000;
+
+
+9) ALL:-
+
+
+All operator will returns true if the all the values of sub-query meets the condition;
+
+SELECT * FROM EMPLOYEES WHERE SALARY>ALL(SELECT SALARY FROM EMPLOYEES WHERE SALARY>10000);
+
+10) ANY:-
+
+Any operator will return true if any of the value of subquery meets the condition
+
+
+SELECT * FROM EMPLOYEES WHERE SALARY>ANY(SELECT SALARY FROM EMPLOYEES WHERE SALARY>10000);
+
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+								INDEX
+							-------------------
+
+
+
+Index is used to retrive the data more quickly from the database;
+
+Actually the users cannot see the indeces, they are used to just speed up the searches;
+
+CREATE INDEX  index1 ON employees (LastName, FirstName);
+
+
+
+DIS ADVANTAGE:-
+
+GENERALLY WE CREATE INDDEX ON SPECIFIC COLUMNS;
+
+But if we insert snother row to that table.. the total structure should be changed, due to that there is  a chance of decreacing performance
+
+
+
+
+							VIEWS 
+						-----------------
+
+Views are nothing but virtual tables, They are not supposed to store phisically.
+we can create them by selecting some specific columns from a single table or from multiple tables;
+
+Views are just stored SQL statements
+
+Whenever we want to retrieve data from a view,It will collect it from the base table
+
+It is also used for security purpose.
+It reduces complexity of query
+
+CREATE VIEW view_name AS 
+SELECT FIRST_NAME,HIRE_DATE,SALARY FROM EMPLOYEES;
+Views are just stored SQL statements
+
+i) SIMPLE VIEW :-
+
+-- Simple views are based on sigle table.
+DML's are accepted.
+The records are not gruop,grouped functions are not allowed
+Simple views cannot contain distinct ketword;
+
+CREATE OR REPLACE VIEW MIN_EMP AS  SELECT EMPLOYEE_ID,FIRST_NAME,SALARY FRO EMPLOYEES;
+
+
+ii) COMPLEX VIEW:-
+
+Complex views are based on multiple tables;
+we can use joins with condition while creating views;
+DML's are not allowed;
+
+
+CREATE OR REPLACE VIEW CPL_VIEW AS SELECT E.FIRST_NAME,E.SALARY,D.DEPTNO  FROM EMPLOYEES E FULL JOIN DEPARTMENTS D ON E.DEPARTMENT_ID=D.DEPTNO;
+
+
+MATERIALIZED VIEWS
+_________ 
+
+Unline the views, materialized views are stored phisically.
+
+whenever we retriving data from materialized view... It will not collect it from base table, It will collect it from the phyisocal view;
+
+create or replace materialized view as select e.employee_id,e.first_name,e.job_id from employees e full join jobj on e.job_id=j.job_id;
+
+
+Whenever we perforem any task in base table... we have to refresh the materialized view also;
+
+SYNTAX :-
+
+DBMS_MVIEW.REFRESH(view_name);
+
+
+
+
+
+
+-------------------------------------------------------------------------------
+
+						JOINS
+`					--------------
+
+The process of retriving data from multiple tables is known as JOINS;
+
+1) CARTESIAN JOIN / CROSS JOIN :
+
+In this type one record from one table will be merged with all records from another table;
+
+	EMP					DEPT
+
+ENAME 			DEPTNO                 DNAME    	DEPTNO
+A			20		D1 		10
+B			30		D2		20
+C			10		D3 		30                       
+
+
+select * from EMP,DEPT;
+
+or 
+
+SELECT * FROM EMP CROSS JOIN DEPT;
+
+result set will be :
+
+
+ENAME 		DEPTNO 		DNAME 		DEPTNO
+A 		20 		D1 		10
+A 		20		D2		20
+A 		20		D3 		30
+B 		30 		D1 		10
+B 		30 		D2 		20
+B 		30 		D3 		30
+C 		10 		D1 		10
+C 		10 		D2 		20
+C 		10 		D3 		30
+
+
+
+2) INNER JOIN:-
+
+This is used to obtain matched records from both tables;
+
+we have to give condition with one equal column in both tables;
+
+SELECT E.FIRST_NAME,E.SALARY,D.DEPARTMENT_ID FROM EMPLOYEES E INNER JOIN DEPARTMENTS D ON E.DEPARTMENT_ID=D.DEPSRTMENT_ID;
+
+OR 
+
+SELECT E.FIRST_NAME,E.SALARY,D.DEPARTMENT_ID FROM EMPLOYEES E, DEPARTMENTS D WHERE E.DEPARTMENT_ID=D.DEPSRTMENT_ID;
+
+
+3) NATURAL JOIN :
+
+"It behaves as INNER JOIN if there is a relation between the given two tables , else it behaves as CROSS JOIN" 
+
+
+
+4) OUTER JOIN:-
+
+i) LEFT JOIN:- This is used to obtain matched records and unmatched records from left table;
+
+SELECT E.FIRST_NAME,E.SALARY,EM.ENAME FROM EMPLOYEES E LEFT JOIN EMP EM ON E.DEPARTMENT_ID=EM.DEPTNO;
+
+
+
+II) RIGHT JOIN :- This is used to obtaion matched records and unmatched records from roight table;
+
+SELECT E.FIRST_NAME,E.SALARY,EM.ENAME FROM EMPLOYEES E RIGHT JOIN EMP EM ON E.DEPARTMENT_ID=EM.DEPTNO;
+
+
+iii) FULL OUTER JOIN :- This ised used to get matched records and unmatched records from both tables;
+
+
+SELECT E.FIRST_NAME,E.SALARY,EM.ENAME FROM EMPLOYEES E FULL JOIN EMP EM ON E.DEPARTMENT_ID=EM.DEPTNO;
+
+
+5) SELF JOIN :- This is used to join a table itself.
+
+whenever the data to select is present in same table but in different records... we can use self join;
+
+SELECT E.FIRST_NAME,EM.FIRST_NAME FROM EMPLOYEES E JOIN EMPLOYEES EM ON E.MANAGER=EM.EMPLOYEE_ID;
+
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+CO-RELATED SUB-QUERY:-
+
+A query written inside a query  such that outer query and inner query are dependent each other. This is known as co-related sub-query;
+
+
+There should be join condition:
+
+SELECT E.DEPARTMENT_NAME FROM EMPLOYEES E WHERE E.DEPARTMENT_ID IN(SELECT D.DEPTNO fROM DEPARTMENTS D WHERE e.department_id=d.deptno)
+
+
+NOTE:- In a sub query, inner query exicutes first and then outer query exicuts.... but in co-related sub-query, outer query exicutes first and then inner query
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+								SEQUENCES
+							--------------------
+
+CREATE SEQUENCE sequence_name
+START WITH initial_value
+INCREMENT BY increment_value
+MINVALUE minimum value
+MAXVALUE maximum value
+CYCLE|NOCYCLE ;
+
+sequence_name: Name of the sequence.
+
+initial_value: starting value from where the sequence starts. 
+Initial_value should be greater than or equal 
+to minimum value and less than equal to maximum value.
+
+increment_value: Value by which sequence will increment itself. 
+Increment_value can be positive or negative.
+
+minimum_value: Minimum value of the sequence.
+maximum_value: Maximum value of the sequence.
+
+cycle: When sequence reaches its set_limit 
+it starts from beginning.
+
+nocycle: An exception will be thrown 
+if sequence exceeds its max_value.
+
+CREATE SEQUENCE sequence_1
+start with 1
+increment by 1
+minvalue 0
+maxvalue 100
+cycle;
+
+
+
+
+
+
